@@ -1,2 +1,2 @@
-
 *.txt
+/bases-node/node_modules
