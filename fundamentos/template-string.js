@@ -1,11 +1,11 @@
 let nombre = "Taniuska";
 let real = "Tania";
 
-console.log(nombre+' '+real);
+console.log(nombre + ' ' + real);
 
 console.log(`${nombre} ${real}`);
 
-function getNombre(){
+function getNombre() {
   return `${nombre} ${real}`;
 }
 

@@ -1,38 +1,38 @@
 let empleados = [{
-    id: 1,
-    nombre: "Tania"
-},{
-    id: 2,
-    nombre: "Marta"
-},{
-    id: 3,
-    nombre: "Jorge"
+  id: 1,
+  nombre: "Tania"
+}, {
+  id: 2,
+  nombre: "Marta"
+}, {
+  id: 3,
+  nombre: "Jorge"
 }];
 
 let salarios = [{
-    id: 1,
-    importe: "1000"
-},{
-    id: 2,
-    importe: "900"
+  id: 1,
+  importe: "1000"
+}, {
+  id: 2,
+  importe: "900"
 }];
 
 let getEmpleado = (id, callback) => {
-  let empleadoDB = empleados.find(empleado => empleado.id===id )
+  let empleadoDB = empleados.find(empleado => empleado.id === id)
 
-  if(!empleadoDB){
+  if (!empleadoDB) {
     callback(`No existe un empleado con el ID ${id}`)
-  }else{
+  } else {
     callback(null, empleadoDB);
   }
 }
 
 let getSalario = (empleado, callback) => {
-  let salarioDB = salarios.find(salario => salario.id===empleado.id)
+  let salarioDB = salarios.find(salario => salario.id === empleado.id)
 
-  if(!salarioDB){
+  if (!salarioDB) {
     callback(`No se encontró un salario para el empleado ${empleado.nombre}`)
-  }else{
+  } else {
 
     callback(null, {
       nombre: empleado.nombre,
@@ -41,16 +41,16 @@ let getSalario = (empleado, callback) => {
   }
 }
 
-getEmpleado(3, (error, empleado)=>{
+getEmpleado(3, (error, empleado) => {
 
-  if(error){
-      return console.log(error);
+  if (error) {
+    return console.log(error);
   }
 
-  getSalario(empleado, (error, salario)=>{
+  getSalario(empleado, (error, salario) => {
 
-    if(error){
-        return console.log(error);
+    if (error) {
+      return console.log(error);
     }
 
     console.log(salario);
