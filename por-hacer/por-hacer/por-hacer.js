@@ -4,31 +4,49 @@ let listadoTareas = [];
 
 const guardarDB = () => {
 
-    return new Promise((resolve, reject) => {
+  let data = JSON.stringify(listadoTareas);
 
-        let data = JSON.stringify(listadoTareas);
+  fs.writeFile(`db/data.json`, data, (error) => {
+    if (error) throw new Error("No se pudo grabar la tarea", error);
+  });
+}
 
-        fs.writeFile(`db/data.json`, data, (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(`Tarea guardada en la BD`);
-          }
-        });
-      }
-    }
+const cargarDB = () => {
 
-    const crear = (descripcion) => {
-      let tarea = {
-        descripcion,
-        completado: false
-      }
+  try {
+    //al hacer un require de un json automáticamente se guarda como objeto en la variable
+    listadoTareas = require("../db/data.json");
+  } catch (error) {
+    listadoTareas = [];
+  }
 
-      listadoTareas.push(tarea);
+}
 
-      return tarea;
-    }
+const getListado = () => {
 
-    module.exports = {
-      crear
-    }
+  cargarDB();
+
+  return listadoTareas;
+
+}
+
+const crear = (descripcion) => {
+
+  cargarDB();
+
+  let tarea = {
+    descripcion,
+    completado: false
+  }
+
+  listadoTareas.push(tarea);
+
+  guardarDB();
+
+  return tarea;
+}
+
+module.exports = {
+  crear,
+  getListado
+}
