@@ -46,7 +46,44 @@ const crear = (descripcion) => {
   return tarea;
 }
 
+const updateTarea = (descripcion, completada=true) => {
+
+  cargarDB();
+
+  let index = listadoTareas.findIndex(tarea => tarea.descripcion === descripcion);
+
+  if(index>=0){
+    listadoTareas[index].completado = completada;
+    guardarDB();
+
+    return true;
+  }else{
+    return false;
+  }
+
+}
+
+const borrarTarea = (descripcion) => {
+
+  cargarDB();
+
+  let index = listadoTareas.findIndex(tarea => tarea.descripcion === descripcion);
+
+  if(index>=0){
+
+    listadoTareas.splice( index, 1 );
+
+    guardarDB();
+
+    return true;
+  }else{
+    return false;
+  }
+}
+
 module.exports = {
   crear,
-  getListado
+  getListado,
+  updateTarea,
+  borrarTarea
 }

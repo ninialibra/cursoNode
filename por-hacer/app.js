@@ -23,9 +23,15 @@ switch (comando) {
     break;
 
   case "actualizar":
-    console.log("Actualizar tarea");
+    let actualizado = porHacer.updateTarea(argv.descripcion, argv.completado);
+    console.log(actualizado);
     break;
-    
+
+  case "borrar":
+    let borrado = porHacer.borrarTarea(argv.descripcion);
+    console.log(borrado);
+    break;
+
   default:
     console.log("Comando no reconocido");
 }
