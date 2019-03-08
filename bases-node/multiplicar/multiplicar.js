@@ -1,6 +1,10 @@
+//modulo para gestion de ficheros
 const fs = require('fs');
+
+//modulo gestion de colores
 const colors = require("colors");
 
+//funciones
 let listarTabla = (base, limite=10) => {
 
   console.log("==========================".green);
@@ -37,6 +41,7 @@ let crearArchivo = (base, limite=10) => {
   });
 }
 
+//exportamos funciones
 module.exports = {
   crearArchivo,
   listarTabla

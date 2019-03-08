@@ -1,20 +1,20 @@
-var nombre = "Tania";
+var nombre = 'Tania';
 
-if(true){
-  var nombre = "Nayara";
+if (true) {
+  var nombre = 'Nayara';
 }
 
 console.log(nombre);
 
-let nombre2 = "Carlos";
-nombre2 = "Víctor";
+let nombre2 = 'Carlos';
+nombre2 = 'Víctor';
 
 console.log(nombre2);
 
-let apellido = "Miranda";
+let apellido = 'Miranda';
 
-if(true){
-  let apellido = "García";
+if (true) {
+  let apellido = 'García';
 }
 
 console.log(apellido);

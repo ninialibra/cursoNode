@@ -1,25 +1,22 @@
 let getNombre = async() => {
-
   //throw new Error("No existe un nombre para ese usuario");
-
-  return "Tania";
+  return 'Tania';
 };
 
-getNombre().then(nombre=>{
+getNombre().then(nombre => {
     console.log(nombre);
   })
-  .catch(e=>{
-    console.log("Error de ASYNC", e);
+  .catch(e => {
+    console.log('Error de ASYNC', e);
   })
 
 
 let getNombre2 = () => {
-  return new Promise ( (resolve, reject) => {
+  return new Promise((resolve, reject) => {
 
-    setTimeout(()=>{
-      resolve ("Tania");
+    setTimeout(()=> {
+      resolve ('Tania');
     }, 3000);
-
   })
 }
 
@@ -32,6 +29,6 @@ let saludo = async () => {
   return `Hola ${nombre}`;
 }
 
-saludo().then(mensaje=>{
+saludo().then(mensaje=> {
   console.log(mensaje);
 })

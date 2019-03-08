@@ -1,31 +1,31 @@
 let empleados = [{
     id: 1,
-    nombre: "Tania"
+    nombre: 'Tania'
 },{
     id: 2,
-    nombre: "Marta"
+    nombre: 'Marta'
 },{
     id: 3,
-    nombre: "Jorge"
+    nombre: 'Jorge'
 }];
 
 let salarios = [{
     id: 1,
-    importe: "1000"
+    importe: '1000'
 },{
     id: 2,
-    importe: "900"
+    importe: '900'
 }];
 
 let getEmpleado = (id) => {
 
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject)=> {
 
-    let empleadoDB = empleados.find(empleado => empleado.id===id )
+    let empleadoDB = empleados.find(empleado => empleado.id === id)
 
-    if(!empleadoDB){
+    if (!empleadoDB) {
       reject(`No existe un empleado con el ID ${id}`)
-    }else{
+    } else {
       resolve(empleadoDB);
     }
 
@@ -34,13 +34,13 @@ let getEmpleado = (id) => {
 
 let getSalario = (empleado) => {
 
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject)=> {
 
-    let salarioDB = salarios.find(salario => salario.id===empleado.id)
+    let salarioDB = salarios.find(salario => salario.id === empleado.id)
 
-    if(!salarioDB){
+    if (!salarioDB) {
       reject(`No se encontró un salario para el empleado ${empleado.nombre}`)
-    }else{
+    } else {
 
       resolve({
         nombre: empleado.nombre,
@@ -61,14 +61,14 @@ let getSalario = (empleado) => {
 }, (error)=> console.log(error) );*/
 
 //ejemplo anterior con promesas encadenadas
-getEmpleado(3).then(empleado=>{
+getEmpleado(3).then(empleado=> {
 
     return getSalario(empleado);
 
   })
-  .then(salario=>{
+  .then(salario=> {
     console.log(salario);
   })
-  .catch(error=>{
+  .catch(error=> {
     console.log(error);
   });
