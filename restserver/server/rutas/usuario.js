@@ -5,7 +5,23 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
 app.get('/usuario', function (req, res) {
-  res.json('getUsuario');
+
+  Usuario.find()
+    .exec((error, usuarios)=> {
+
+      if (error) {
+        return res.status(400).json({
+          ok: false,
+          error,
+        });
+      }
+
+      res.json({
+        ok: true,
+        usuarios,
+      });
+
+    });
 });
 
 app.post('/usuario', function (req, res) {
