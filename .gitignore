@@ -5,4 +5,4 @@
 /webserver/node_modules
 /webserver/public/assets
 /restserver/node_modules
-/restserver/server/config
+/restserver/server/config 
