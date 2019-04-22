@@ -28,7 +28,7 @@ app.get('/usuario', function (req, res) {
         });
       }
 
-      Usuario.countDocuments({ estado: true }, (error, nRegistros) => {
+      Usuario.count({ estado: true }, (error, nRegistros) => {
         res.json({
           ok: true,
           count: nRegistros,
@@ -76,7 +76,7 @@ app.put('/usuario/:id', function (req, res) {
   //filtra los parametros para coger solo los indicados
   let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
-  Usuario.findOneAndUpdate(id, body, { new: true, runValidators: true }, (error, usuarioBD) => {
+  Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (error, usuarioBD) => {
 
     if (error) {
       return res.status(400).json({
@@ -97,7 +97,7 @@ app.delete('/usuario/:id', function (req, res) {
   let id = req.params.id;
 
   //Usuario.findByIdAndRemove(id, (error, usuarioBorrado) => {
-  Usuario.findOneAndUpdate(id, { estado: false }, { new: true }, (error, usuarioBorrado) => {
+  Usuario.findByIdAndUpdate(id, { estado: false }, { new: true }, (error, usuarioBorrado) => {
 
     if (error) {
       return res.status(400).json({

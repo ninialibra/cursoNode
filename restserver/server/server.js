@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 app.use(require('./rutas/usuario'));
 
-mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useCreateIndex: true }, (error, res) => {
+mongoose.connect(process.env.URLBD, { useNewUrlParser: true, useCreateIndex: true }, (error, res) => {
   if (error) throw error;
 
   console.log('Conexión realizada a la base de datos');
