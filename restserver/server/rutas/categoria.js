@@ -11,7 +11,9 @@ const Categoria = require('../modelos/categoria');
  //todas las categorias
  app.get('/categoria', verificaToken, (req, res) => {
       
-    Categoria.find({}, 'nombre idUsuario')      
+    Categoria.find({})
+      .sort('nombre')
+      .populate('usuario', 'nombre email')      
       .exec((error, categorias)=> {
   
         if (error) {
@@ -63,14 +65,14 @@ app.get('/categoria/:id', verificaToken, (req, res) => {
 });
 
 //crear nueva categoria con post que devuelve la categoria creada
-app.post('/categoria', [verificaToken], function (req, res) {
+app.post('/categoria', verificaToken, function (req, res) {
 
     let body = req.body; 
-    let idUsuario = req.usuario._id;
+    let usuario = req.usuario._id;
   
     let categoria = new Categoria({
       nombre: body.nombre,
-      idUsuario
+      usuario
     });
   
     categoria.save((error, categoriaBD) => {
@@ -98,7 +100,7 @@ app.post('/categoria', [verificaToken], function (req, res) {
   });
 
 //put para actualizar categoria
-app.put('/categoria/:id', [verificaToken], function (req, res) {
+app.put('/categoria/:id', verificaToken, function (req, res) {
 
     let id = req.params.id;
   
@@ -113,6 +115,13 @@ app.put('/categoria/:id', [verificaToken], function (req, res) {
           error,
         });
       };
+
+      if (!categoriaBD) {
+        return res.status(400).json({
+          ok: false,
+          error,
+        });
+      }
   
       res.json({
         ok: true,
@@ -139,7 +148,7 @@ app.delete('/categoria/:id', [verificaToken, verificaAdminRole], function (req, 
         return res.status(400).json({
           ok: false,
           error: {
-            mensaje: 'Categoría no encontrada',
+            mensaje: "Categoría no encontrada",
           },
         });
       }

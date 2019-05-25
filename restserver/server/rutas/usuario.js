@@ -113,7 +113,7 @@ app.delete('/usuario/:id', [verificaToken, verificaAdminRole], function (req, re
       return res.status(400).json({
         ok: false,
         error: {
-          mensaje: 'Usuario no encontrado',
+          mensaje: "Usuario no encontrado",
         },
       });
     }

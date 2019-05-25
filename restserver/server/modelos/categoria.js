@@ -9,8 +9,9 @@ let categoriaSchema = new Schema({
     type: String,
     required: [true, 'El nombre es necesario'],
   },  
-  idUsuario: {
-    type: String
+  usuario: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Usuario'
   },
 
 });
