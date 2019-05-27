@@ -5,4 +5,5 @@
 /webserver/node_modules
 /webserver/public/assets
 /restserver/node_modules
+/socket-basico/node_modules
 /restserver/server/config 
