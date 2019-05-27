@@ -3,6 +3,11 @@ const fileUpload = require('express-fileupload');
 const app = express();
 
 const Usuario = require('../modelos/usuario');
+const Producto = require('../modelos/producto');
+
+//nativos de node
+const fs = require('fs');
+const path = require('path');
 
 // default options
 app.use(fileUpload({ useTempFiles: true, tempFileDir: 'uploads/' }));
@@ -55,7 +60,7 @@ app.put('/upload/:tipo/:id', function (req, res) {
     }
 
     //cambiar nombre de archivo
-    let nombre_archivo = `${ id }-${ new Date().getMilliseconds() }.${ extension }`;
+    let nombre_archivo = `${id}-${new Date().getMilliseconds()}.${extension}`;
 
     // Use the mv() method to place the file somewhere on your server
     archivo.mv(`uploads/${tipo}/${nombre_archivo}`, (error) => {
@@ -68,16 +73,24 @@ app.put('/upload/:tipo/:id', function (req, res) {
         }
 
         //aqui la imagen ya esta cargada
-        imgUsuario(id, res, nombre_archivo); 
+        if (tipo === 'usuarios') {
+            imgUsuario(id, res, nombre_archivo);
+        } else {
+            imgProducto(id, res, nombre_archivo);
+        }
 
     });
 });
 
-function imgUsuario(id, res, nombre_archivo){
+function imgUsuario(id, res, nombre_archivo) {
 
-    Usuario.findById(id, (error, usuarioBD)=>{
+    Usuario.findById(id, (error, usuarioBD) => {
 
-        if(error){
+        //si hay errores borra la imagen subida por limpieza
+        if (error) {
+
+            borraArchivo(nombre_archivo, 'usuarios');
+
             return res.status(500).json({
                 ok: false,
                 error
@@ -85,6 +98,9 @@ function imgUsuario(id, res, nombre_archivo){
         }
 
         if (!usuarioBD) {
+
+            borraArchivo(nombre_archivo, 'usuarios');
+
             return res.status(400).json({
                 ok: false,
                 error: {
@@ -93,9 +109,12 @@ function imgUsuario(id, res, nombre_archivo){
             });
         }
 
+        //borrado de la imagen anterior
+        borraArchivo(usuarioBD.img, 'usuarios');
+
         usuarioBD.img = nombre_archivo;
 
-        usuarioBD.save((error, usuarioBD)=>{
+        usuarioBD.save((error, usuarioBD) => {
             res.json({
                 ok: true,
                 usuario: usuarioBD,
@@ -107,8 +126,57 @@ function imgUsuario(id, res, nombre_archivo){
 
 }
 
-function imgProducto(){
+function imgProducto(id, res, nombre_archivo) {
 
+    Producto.findById(id, (error, productoBD) => {
+
+        //si hay errores borra la imagen subida por limpieza
+        if (error) {
+
+            borraArchivo(nombre_archivo, 'productos');
+
+            return res.status(500).json({
+                ok: false,
+                error
+            });
+        }
+
+        if (!productoBD) {
+
+            borraArchivo(nombre_archivo, 'productos');
+
+            return res.status(400).json({
+                ok: false,
+                error: {
+                    mensaje: 'El producto no existe'
+                }
+            });
+        }
+
+        //borrado de la imagen anterior
+        borraArchivo(productoBD.img, 'productos');
+
+        productoBD.img = nombre_archivo;
+
+        productoBD.save((error, productoBD) => {
+            res.json({
+                ok: true,
+                producto: productoBD,
+                img: nombre_archivo
+            });
+        });
+
+    });
+
+}
+
+function borraArchivo(nombre_imagen, tipo) {
+
+    let pathImagen = path.resolve(__dirname, `../uploads/${tipo}/${nombre_imagen}`);
+
+    if (fs.existsSync(pathImagen)) {
+        fs.unlinkSync(pathImagen);
+    }
 }
 
 module.exports = app;

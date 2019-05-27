@@ -4,12 +4,12 @@ const jwt = require('jsonwebtoken');
 // Verificar token
 // =====================
 let verificaToken = (req, res, next) => {
-    
+
     let token = req.get('token');
 
-    jwt.verify(token, process.env.SEED, (error, decode)=>{
+    jwt.verify(token, process.env.SEED, (error, decode) => {
 
-        if (error){
+        if (error) {
             return res.status(401).json({
                 ok: false,
                 error: {
@@ -22,17 +22,17 @@ let verificaToken = (req, res, next) => {
         next();
 
     });
-    
+
 };
 
 // =====================
 // Verificar admin role
 // =====================
 let verificaAdminRole = (req, res, next) => {
-    
+
     let usuario = req.usuario;
 
-    if(usuario.role !== 'ADMIN_ROLE'){
+    if (usuario.role !== 'ADMIN_ROLE') {
 
         return res.status(401).json({
             ok: false,
@@ -43,10 +43,36 @@ let verificaAdminRole = (req, res, next) => {
     }
 
     next();
-    
+
 };
+
+// =====================
+// Verificar token para img
+// =====================
+let verificaTokenImg = (req, res, next) => {
+
+    let token = req.query.token;
+
+    jwt.verify(token, process.env.SEED, (error, decode) => {
+
+        if (error) {
+            return res.status(401).json({
+                ok: false,
+                error: {
+                    mensaje: 'Token no válido',
+                },
+            });
+        }
+
+        req.usuario = decode.usuario;
+        next();
+
+    });
+
+}
 
 module.exports = {
     verificaToken,
-    verificaAdminRole 
+    verificaAdminRole,
+    verificaTokenImg
 }
