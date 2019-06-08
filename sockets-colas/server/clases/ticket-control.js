@@ -41,8 +41,11 @@ class TicketControl {
     }
 
     getUltimoTicket() {
-
         return `Ticket ${this.ultimo}`;
+    }
+
+    getUltimos4() {
+        return this.ultimos4;
     }
 
     atenderTicket(escritorio) {
