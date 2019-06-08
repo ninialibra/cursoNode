@@ -7,4 +7,5 @@
 /restserver/node_modules
 /socket-basico/node_modules
 /sockets-colas/node_modules
+/socket-chat/node_modules
 /restserver/server/config 
