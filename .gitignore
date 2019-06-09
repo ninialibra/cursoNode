@@ -8,4 +8,6 @@
 /socket-basico/node_modules
 /sockets-colas/node_modules
 /socket-chat/node_modules
+/typescript-mysql/node_modules
+/typescript-mysql/dist
 /restserver/server/config 
