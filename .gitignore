@@ -10,4 +10,5 @@
 /socket-chat/node_modules
 /typescript-mysql/node_modules
 /typescript-mysql/dist
+/typescript-mysql/src/mysql
 /restserver/server/config 
